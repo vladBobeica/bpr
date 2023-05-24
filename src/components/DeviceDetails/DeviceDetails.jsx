@@ -1,7 +1,27 @@
-const Device = ({item}) => {
-    return (
-        <h1>{item.name}</h1>
-    );
-}
+import {
+  Box,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  CardActions,
+  Chip,
+} from "@mui/material";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+
+const Device = ({ item }) => {
+  return (
+    <Card elevation={6}>
+      <CardContent>
+        <Typography gutterBottom variant="h5">
+          {item.id}
+        </Typography>
+        <Box display="flex" justifyContent="space-between">
+          <Typography variant="subtitle1">{item.type}</Typography>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+};
 
 export default Device;

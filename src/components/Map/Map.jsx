@@ -1,12 +1,11 @@
 import GoogleMapReact from "google-map-react";
 import { useMediaQuery } from "@mui/material";
 
-const coordinates = { lat: 0, lng: 0 };
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
 const mapContainerStyles = { height: "85vh", width: "100%" };
 
-const Map = () => {
+const Map = ({ setCoordinates, coordinates }) => {
   const isMobile = useMediaQuery("(min-width:600px)");
 
   return (
@@ -17,6 +16,9 @@ const Map = () => {
         defaultZoom={14}
         center={coordinates}
         margin={[50, 50, 50, 50]}
+        onChange={(e) => {
+          setCoordinates({ lat: e.center.lat, lng: e.center.lng });
+        }}
       />
     </div>
   );
