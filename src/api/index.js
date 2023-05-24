@@ -11,13 +11,13 @@ export const getItemsData = async (lat, lng) => {
         username: username,
         password: password,
       },
-      location: {
-        value: {
-          coordinates: {
-            value: [lat, lng],
-          },
-        },
-      },
+      // location: {
+      //   value: {
+      //     coordinates: {
+      //       value: [lat, lng],
+      //     },
+      //   },
+      // },
     });
 
     return response.data;

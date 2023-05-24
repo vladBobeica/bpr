@@ -7,8 +7,6 @@ import {
   CardActions,
   Chip,
 } from "@mui/material";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-
 const Device = ({ item }) => {
   return (
     <Card elevation={6}>
