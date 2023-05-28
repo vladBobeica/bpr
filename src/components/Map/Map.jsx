@@ -1,5 +1,4 @@
 import GoogleMapReact from "google-map-react";
-import { useMediaQuery, Paper } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
@@ -12,8 +11,6 @@ const defaultCoordinates = {
 };
 
 const Map = ({ items, coordinates = defaultCoordinates }) => {
-  const isMobile = useMediaQuery("(min-width:600px)");
-
   return (
     <div style={mapContainerStyles}>
       <GoogleMapReact

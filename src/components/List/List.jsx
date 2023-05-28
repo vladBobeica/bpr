@@ -1,7 +1,22 @@
 import { Typography, Grid, FormControl, CircularProgress } from "@mui/material";
 import DeviceDetails from "../DeviceDetails/DeviceDetails";
+import DeviceDetailsPopup from "../DeviceDetails/DeviceDetailsPopup";
+import React, { useState } from "react";
 
 const List = ({ items, isLoading, selectedDevice }) => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+
+  const handleCardClick = (item) => {
+    setSelectedItem(item);
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setSelectedItem(null);
+    setIsPopupOpen(false);
+  };
+
   return (
     <div
       style={{
@@ -39,10 +54,18 @@ const List = ({ items, isLoading, selectedDevice }) => {
               <DeviceDetails
                 item={item}
                 isHighlighted={item.id === selectedDevice}
+                onClick={handleCardClick}
               />
             </Grid>
           ))}
         </Grid>
+      )}
+      {selectedItem && (
+        <DeviceDetailsPopup
+          item={selectedItem}
+          isOpen={isPopupOpen}
+          onClose={handleClosePopup}
+        />
       )}
     </div>
   );
