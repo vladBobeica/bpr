@@ -15,6 +15,7 @@ function App() {
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getItemsData(defaultCoordinates.lat, defaultCoordinates.lng)
@@ -25,6 +26,7 @@ function App() {
         console.log(error);
       })
       .finally(() => {
+        setIsLoading(false);
         console.log("Fetched data");
       });
   }, []);
@@ -46,7 +48,7 @@ function App() {
       <Grid container spacing={3} style={{ width: "100%" }}>
         <Grid item xs={12} md={4} style={{ position: "relative", zIndex: 1 }}>
           <div style={{ height: "100%", overflowY: "auto" }}>
-            <List items={filteredItems} />
+            <List items={filteredItems} isLoading={isLoading} />
           </div>
         </Grid>
         <Grid item xs={12} md={8}>
