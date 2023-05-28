@@ -4,7 +4,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
-const mapContainerStyles = { height: "85vh", width: "100%" };
+const mapContainerStyles = { height: "100%", width: "100%" };
 
 const defaultCoordinates = {
   lat: 55.4632518,
@@ -33,7 +33,7 @@ const Map = ({ items, coordinates = defaultCoordinates }) => {
               <div
                 style={{
                   position: "absolute",
-                  // transform: "translate(-50%, -50%)",
+
                   zIndex: 1,
                   "&:hover": { zIndex: 2 },
                 }}

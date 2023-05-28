@@ -16,6 +16,7 @@ function App() {
   const [filteredItems, setFilteredItems] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     getItemsData(defaultCoordinates.lat, defaultCoordinates.lng)
@@ -37,6 +38,14 @@ function App() {
     setLoggedIn(true);
   };
 
+  const handleSearch = (value) => {
+    setSearchQuery(value);
+    const filteredItems = filterDevices(items).filter((item) =>
+      item.id.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredItems(filteredItems);
+  };
+
   if (!loggedIn) {
     return <LoginPage onLoginSuccess={handleLoginSuccess} />;
   }
@@ -44,15 +53,15 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <SearchAppBar />
-      <Grid container spacing={3} style={{ width: "100%" }}>
-        <Grid item xs={12} md={4} style={{ position: "relative", zIndex: 1 }}>
+      <SearchAppBar handleSearch={handleSearch} />
+      <Grid container spacing={3} style={{ marginLeft: 0, width: "100%" }}>
+        <Grid item xs={12} md={3} style={{ position: "relative", zIndex: 1 }}>
           <div style={{ height: "100%", overflowY: "auto" }}>
             <List items={filteredItems} isLoading={isLoading} />
           </div>
         </Grid>
-        <Grid item xs={12} md={8}>
-          <div style={{ height: "85vh", width: "100%" }}>
+        <Grid item xs={12} md={9} style={{ paddingLeft: 0 }}>
+          <div style={{ height: "100%", width: "100%" }}>
             <Map items={filteredItems} />
           </div>
         </Grid>

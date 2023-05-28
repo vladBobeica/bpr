@@ -1,17 +1,12 @@
-import {
-  Box,
-  Typography,
-  Button,
-  Card,
-  CardContent,
-  CardActions,
-  Chip,
-} from "@mui/material";
-const Device = ({ item }) => {
+import { Box, Typography, Card, CardContent } from "@mui/material";
+const Device = ({ item, isHighlighted }) => {
+  const cardStyle = {
+    elevation: isHighlighted ? 10 : 6,
+  };
   return (
-    <Card elevation={6}>
+    <Card elevation={6} sx={cardStyle}>
       <CardContent>
-        <Typography gutterBottom variant="h5">
+        <Typography gutterBottom variant="h5" sx={{ overflowWrap: "anywhere" }}>
           {item.id}
         </Typography>
         <Box display="flex" justifyContent="space-between">
