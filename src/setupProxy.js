@@ -9,6 +9,16 @@ module.exports = function (app) {
       pathRewrite: {
         "^/api": "",
       },
+      onProxyRes(proxyRes) {
+        proxyRes.headers = removeAuthenticateHeader(proxyRes.headers);
+      },
     })
   );
 };
+
+const removeAuthenticateHeader = (headers) =>
+  Object.fromEntries(
+    Object.entries(headers).filter(
+      ([key]) => "www-authenticate" !== key.toLowerCase()
+    )
+  );

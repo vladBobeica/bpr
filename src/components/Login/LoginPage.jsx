@@ -1,25 +1,45 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import AuthContext from "../../contexts/Auth/AuthContext";
 import { Paper, Typography, TextField, Button, Grid } from "@mui/material";
+import { login } from "../../api";
 
 const LoginPage = ({ onLoginSuccess }) => {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const [areCredentialsInvalid, setAreCredentialsInvalid] = useState(false);
+
+  const {
+    username: usernameC,
+    password: passwordC,
+    updateCredentials,
+  } = useContext(AuthContext);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const storedPassword = process.env.REACT_APP_PASSWORD;
+    setAreCredentialsInvalid(false);
+    setIsLoading(true);
 
-    if (password === storedPassword) {
-      console.log("Login successful");
-      onLoginSuccess();
-    } else {
-      setError("Invalid password");
+    try {
+      await login(username, password);
+
+      setLogin();
+    } catch (error) {
+      if (error.response.status === 401) {
+        setAreCredentialsInvalid(true);
+      }
+      console.error("Invalid credentials", error.response.status);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const setLogin = () => {
+    updateCredentials(username, password);
+    onLoginSuccess();
   };
 
   return (
@@ -38,19 +58,39 @@ const LoginPage = ({ onLoginSuccess }) => {
           </Typography>
           <form onSubmit={handleSubmit}>
             <TextField
-              type="password"
-              label="Password"
-              value={password}
-              onChange={handlePasswordChange}
+              type="name"
+              label="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               variant="outlined"
               margin="normal"
               fullWidth
             />
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Login
+            <TextField
+              type="password"
+              label="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              variant="outlined"
+              margin="normal"
+              fullWidth
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading..." : "Login"}
             </Button>
           </form>
-          {error && <Typography color="error">{error}</Typography>}
+          <br />
+          {areCredentialsInvalid && (
+            <Typography color="error" style={{ textAlign: "center" }}>
+              The username and password combination entered is invalid.
+            </Typography>
+          )}
         </Paper>
       </Grid>
     </Grid>

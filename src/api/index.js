@@ -1,28 +1,32 @@
 import axios from "axios";
 
 const URL = "/api/entities";
-const username = process.env.REACT_APP_FIWARE_API_LOGIN;
-const password = process.env.REACT_APP_FIWARE_API_PASSWORD;
+const URL_LOGIN = "/api/entities/0";
 
-export const getItemsData = async (lat, lng) => {
+export const getItemsData = async (username, password) => {
+  const response = await axios.get(URL, {
+    auth: {
+      username: username,
+      password: password,
+    },
+  });
+
+  return response.data;
+};
+
+export const login = async (username, password) => {
   try {
-    const response = await axios.get(URL, {
-      auth: {
-        username: username,
-        password: password,
+    await axios.get(URL_LOGIN, {
+      headers: {
+        Authorization: `Basic ${btoa(`${username}:${password}`)}`,
       },
-      // location: {
-      //   value: {
-      //     coordinates: {
-      //       value: [lat, lng],
-      //     },
-      //   },
-      // },
     });
 
-    return response.data;
+    return true;
   } catch (error) {
-    console.log(error.response);
+    if (error.response?.status === 404) return true;
+
+    console.error("api/getItemsData :: ", error);
     throw error;
   }
 };

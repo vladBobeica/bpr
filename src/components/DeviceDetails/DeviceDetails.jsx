@@ -1,21 +1,41 @@
-import { Box, Typography, Card, CardContent } from "@mui/material";
-const Device = ({ item, isHighlighted, onClick }) => {
-  const cardStyle = {
-    elevation: isHighlighted ? 10 : 6,
-  };
+import { Lightbulb } from "@mui/icons-material";
+import { Typography, Card, CardContent } from "@mui/material";
 
-  const handleCardClick = () => {
-    onClick(item);
-  };
+const Device = ({ item, onClick }) => {
+  const handleCardClick = () => onClick(item);
+
   return (
-    <Card elevation={6} sx={cardStyle} onClick={handleCardClick}>
+    <Card elevation={6} onClick={handleCardClick}>
       <CardContent>
-        <Typography gutterBottom variant="h5" sx={{ overflowWrap: "anywhere" }}>
-          {item.id}
+        <div
+          style={{
+            alignItems: "center",
+            display: "flex",
+            gap: "8px",
+            marginBottom: "8px",
+          }}
+        >
+          <Lightbulb sx={{ color: "#9ca3af" }} />
+          <Typography
+            gutterBottom
+            variant="h6"
+            sx={{ color: "#9ca3af", overflowWrap: "anywhere" }}
+            style={{ marginBottom: 0 }}
+          >
+            {item.type}
+          </Typography>
+        </div>
+        <Typography
+          variant="subtitle2"
+          style={{
+            color: "#6b7280",
+            overflowX: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          ID: <span title={item.id}>{item.id}</span>
         </Typography>
-        <Box display="flex" justifyContent="space-between">
-          <Typography variant="subtitle1">{item.type}</Typography>
-        </Box>
       </CardContent>
     </Card>
   );

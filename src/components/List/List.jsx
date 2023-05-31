@@ -3,7 +3,7 @@ import DeviceDetails from "../DeviceDetails/DeviceDetails";
 import DeviceDetailsPopup from "../DeviceDetails/DeviceDetailsPopup";
 import React, { useState } from "react";
 
-const List = ({ items, isLoading, selectedDevice }) => {
+const List = ({ items, isLoading }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -26,10 +26,12 @@ const List = ({ items, isLoading, selectedDevice }) => {
         position: "relative",
       }}
     >
-      <Typography variant="h4">Streetlights List</Typography>
-      <FormControl
-        style={{ marginTop: "30px", minWidth: "80px", marginBottom: "30px" }}
-      ></FormControl>
+      <Typography
+        variant="h5"
+        style={{ marginBottom: "24px", marginTop: "8px" }}
+      >
+        Streetlights List
+      </Typography>
       {isLoading ? (
         <div
           style={{
@@ -50,12 +52,8 @@ const List = ({ items, isLoading, selectedDevice }) => {
       ) : (
         <Grid container spacing={1}>
           {items?.map((item, i) => (
-            <Grid item key={i} xs={12}>
-              <DeviceDetails
-                item={item}
-                isHighlighted={item.id === selectedDevice}
-                onClick={handleCardClick}
-              />
+            <Grid item key={i} xs={12} style={{ marginBottom: "8px" }}>
+              <DeviceDetails item={item} onClick={handleCardClick} />
             </Grid>
           ))}
         </Grid>

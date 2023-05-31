@@ -3,21 +3,21 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const apiKey = process.env.REACT_APP_GOOGLE_MAPS_KEY;
 
-const mapContainerStyles = { height: "100%", width: "100%" };
-
-const defaultCoordinates = {
-  lat: 55.4632518,
-  lng: 11.7214979,
+const defaultProps = {
+  center: {
+    lat: 56.03286705928202,
+    lng: 10.136245552682205,
+  },
+  zoom: 11,
 };
 
-const Map = ({ items, coordinates = defaultCoordinates }) => {
+const Map = ({ items }) => {
   return (
-    <div style={mapContainerStyles}>
+    <div style={{ height: "100%", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: apiKey }}
-        defaultCenter={coordinates}
-        defaultZoom={10}
-        center={coordinates}
+        defaultCenter={defaultProps.center}
+        defaultZoom={defaultProps.zoom}
         margin={[50, 50, 50, 50]}
       >
         {items &&
